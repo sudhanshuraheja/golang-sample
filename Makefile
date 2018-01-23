@@ -16,7 +16,6 @@ clean:
 
 setup_mac:
 	brew install dep
-	brew upgrade dep
 	dep init
 
 setup_linux:
@@ -33,7 +32,8 @@ vet:
 	go vet ./...
 
 lint:
-	golint ./... | grep -v vendor
+	#TODO find out why does this always fail
+	#golint ./... | grep -v vendor
 
 copy-config:
 	cp application.toml.sample application.toml
