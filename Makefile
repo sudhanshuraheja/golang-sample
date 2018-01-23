@@ -3,7 +3,7 @@ all: build test
 
 ## Project Initialisation
 
-APP_EXECUTABLE="golang-sample"
+APP_EXECUTABLE="sample"
 
 ALL_PACKAGES=$(go list ./... | grep -v "vendor")
 
@@ -13,6 +13,7 @@ clean:
 	rm -rf application.toml
 	rm -rf coverage.txt
 	rm -rf coverage.html
+	rm -rf bin/
 
 setup_mac:
 	brew install dep
@@ -54,11 +55,16 @@ coverage:
 install:
 	go install
 
-build: fmt vet lint test coverage install
+build: fmt vet lint test coverage compile install
 
 build_fresh: clean setup_mac update fmt vet lint copy-config test compile coverage install
 
 build_ci: clean setup_linux update fmt vet lint copy-config test compile coverage
+
+## Receipes for docker
+
+build_docker:
+	docker build -t sudhanshuraheja/sample .
 
 ## Recipes for starting new projects
 

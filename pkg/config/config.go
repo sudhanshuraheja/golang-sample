@@ -26,10 +26,11 @@ func Init() {
 	viper.AutomaticEnv()
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("..")
+	viper.AddConfigPath("../..")
 	viper.SetConfigName("application")
 	viper.SetConfigType("toml")
 
-	viper.SetDefault("application.name", "ifsc")
+	viper.SetDefault("application.name", "sample")
 	viper.SetDefault("application.version", "NotDefined")
 	viper.SetDefault("application.logLevel", "debug")
 	viper.SetDefault("server.port", "4000")
