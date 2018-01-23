@@ -1,0 +1,24 @@
+version: '3'
+services:
+  # Setup Postgres
+  db:
+    # Use 10.1, alpine version is smaller
+    image: postgres:10.1-alpine
+    # Don't load up older data, start fresh
+    # volumes:
+    #  - ./pgdata:/pgdata
+    # Export this on the usual port
+    ports:
+      - "5432:5432"
+    # These define the db name, user and password
+    environment:
+      - POSTGRES_USER=sample
+      - POSTGRES_PASSWORD=sample
+      - PGDATA=/pgdata
+  # Setup Redis
+  redis:
+    # Again use an alpine version
+    image: redis:4.0.6-alpine
+    # And open up the usual port
+    ports:
+      - "6379:6379"
