@@ -3,7 +3,7 @@ all: build test
 
 ## Project Initialisation
 
-APP_EXECUTABLE="sample"
+APP_EXECUTABLE="samplecli"
 
 ALL_PACKAGES=$(go list ./... | grep -v "vendor")
 
@@ -44,8 +44,8 @@ test:
 
 compile:
 	mkdir -p bin/
-	go build -o bin/$(APP_EXECUTABLE)
-	CGO_ENABLED=0 GOOS=linux go build -o bin/$(APP_EXECUTABLE)_linux
+	go build -o bin/$(APP_EXECUTABLE) ./cmd/$(APP_EXECUTABLE)
+	CGO_ENABLED=0 GOOS=linux go build -o bin/$(APP_EXECUTABLE)_linux ./cmd/$(APP_EXECUTABLE)
 
 coverage:
 	echo 'mode: atomic' > coverage.txt && echo '' > coverage.tmp && go list ./... | xargs -n1 -I{} sh -c 'go test -covermode=atomic -coverprofile=coverage.tmp {} && tail -n +2 coverage.tmp >> coverage.txt'
