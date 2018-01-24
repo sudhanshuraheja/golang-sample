@@ -1,10 +1,10 @@
-#FROM golang:1.9.2-alpine3.7 AS build
-#TODO decide to use alpine or scratch
-#More details here https://medium.com/@kelseyhightower/optimizing-docker-images-for-static-binaries-b5696e26eb07
-FROM scratch
+FROM golang:1.9.2-alpine3.7 AS build
 LABEL maintainer="sudhanshu@go-jek.com"
 
-ADD bin/sample_linux sample
-ENV PORT 80
-EXPOSE 80
-ENTRYPOINT ["/sample"]
+# Just so you can login to it
+RUN apk add --no-cache bash
+
+ADD bin/samplecli_linux samplecli
+ENV PORT 3000
+EXPOSE 3000
+ENTRYPOINT ["/samplecli"]
