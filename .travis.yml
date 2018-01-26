@@ -6,7 +6,7 @@ go:
 before_install:
 
 script:
-  - make build_ci
+  - make build_fresh
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)

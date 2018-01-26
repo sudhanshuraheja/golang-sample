@@ -12,6 +12,8 @@ This is a golang sample app that I use for my own projects
 
 ## Installation instructions
 ```
-$ git clone git@github.com:sudhanshuraheja/golang-sample.git
+$ mkdir new_project
+$ cd new_project
+$ curl -L https://github.com/sudhanshuraheja/golang-sample/archive/master.tar.gz | tar -xzv --strip 1
 $ make build_fresh
 ```

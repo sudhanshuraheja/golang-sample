@@ -37,26 +37,9 @@ clean:
 	rm -rf coverage.html
 	rm -rf bin/
 
-### First initialisation of a new project on a Mac
-init_mac:
-	@echo "$(GREEN_COLOR)Initialising dep for Mac $(END_COLOR)"
-	brew install dep
-	dep init
-
-### First initialisation of a new project on a Linux machine
-init_linux:
-	@echo "$(GREEN_COLOR)Initialising dep for Linux $(END_COLOR)"
-	go get -u github.com/golang/dep/cmd/dep
-	dep init
-
-### Build a project for the first time on a Mac
-setup_mac:
-	@echo "$(GREEN_COLOR)Setting up dep for Mac $(END_COLOR)"
-	brew upgrade dep
-
-### Build a project for the first time on a Linux machine
-setup_linux:
-	@echo "$(GREEN_COLOR)Setting up dep for Linux $(END_COLOR)"
+### Initialisation project for the first time
+init:
+	@echo "$(GREEN_COLOR)Initialising dep for the first time $(END_COLOR)"
 	go get -u github.com/golang/dep/cmd/dep
 
 ### Update dependencies
@@ -100,7 +83,7 @@ compile:
 ### Calculate test coverage for the whole project (except vendors)
 coverage:
 	@echo "$(GREEN_COLOR)Calculating test coverage across packages $(END_COLOR)"
-	echo 'mode: atomic' > coverage.txt && echo '' > coverage.tmp && go list ./... | xargs -n1 -I{} sh -c 'go test -p=5 -race -covermode=atomic -coverprofile=coverage.tmp -timeout=30s {} && tail -n +2 coverage.tmp >> coverage.txt'
+	@echo 'mode: atomic' > coverage.txt && echo '' > coverage.tmp && go list ./... | xargs -n1 -I{} sh -c 'go test -p=5 -race -covermode=atomic -coverprofile=coverage.tmp -timeout=30s {} && tail -n +2 coverage.tmp >> coverage.txt'
 	rm coverage.tmp
 	go tool cover -html=coverage.txt -o coverage.html
 	@echo "$(YELLOW_COLOR)Run open ./coverage.html to view coverage $(END_COLOR)"
@@ -110,14 +93,11 @@ install:
 	@echo "$(GREEN_COLOR)Installing all binaries $(END_COLOR)"
 	go install ./...
 
-### Build the latest source on a mac
+### Build the latest source
 build: fmt vet lint coverage install end
 
-### Build the latest source for the first time on a mac
-build_fresh: clean setup_mac update fmt vet lint copy-config coverage compile install end
-
-### Build on the CI (usually travisCI)
-build_ci: clean setup_linux update fmt vet lint copy-config coverage compile end
+### Build the latest source for the first time
+build_fresh: clean init update fmt vet lint copy-config coverage compile install end
 
 #
 # Receipes for docker
