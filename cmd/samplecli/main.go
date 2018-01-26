@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/sudhanshuraheja/golang-sample/pkg/config"
+	"github.com/sudhanshuraheja/golang-sample/pkg/logger"
 )
 
 func main() {
 	config.Init()
-	fmt.Println("Sample CLI")
+	logger.Init()
+
+	logger.Infoln("Sample CLI")
 }
