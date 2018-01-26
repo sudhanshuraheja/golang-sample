@@ -15,13 +15,16 @@ clean:
 	rm -rf coverage.html
 	rm -rf bin/
 
+init:
+	go get -u github.com/golang/dep/cmd/dep
+	dep init
+
 setup_mac:
 	brew install dep
 	dep init
 
 setup_linux:
 	go get -u github.com/golang/dep/cmd/dep
-	dep init
 
 update:
 	dep ensure
