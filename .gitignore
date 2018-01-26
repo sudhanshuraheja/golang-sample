@@ -16,3 +16,8 @@
 # Project Vendor folder
 vendor/
 application.toml
+
+# External Data
+external/pgdata
+external/redisdata
+external/rabbitmq
