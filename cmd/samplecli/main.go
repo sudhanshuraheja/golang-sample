@@ -7,6 +7,7 @@ import (
 
 	"github.com/sudhanshuraheja/golang-sample/pkg/config"
 	"github.com/sudhanshuraheja/golang-sample/pkg/logger"
+	"github.com/sudhanshuraheja/golang-sample/pkg/postgres"
 )
 
 func main() {
@@ -36,14 +37,14 @@ func Init() *cli.App {
 			Name:  "migrate",
 			Usage: "run database migrations",
 			Action: func(c *cli.Context) error {
-				return nil
+				return postgres.RunDatabaseMigrations()
 			},
 		},
 		{
 			Name:  "rollback",
 			Usage: "rollback the latest database migration",
 			Action: func(c *cli.Context) error {
-				return nil
+				return postgres.RollbackDatabaseMigration()
 			},
 		},
 	}
