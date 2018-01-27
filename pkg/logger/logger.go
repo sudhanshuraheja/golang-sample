@@ -23,7 +23,7 @@ func NewLogger(config *config.Config) *Logger {
 			Out:       os.Stdout,
 			Hooks:     make(logrus.LevelHooks),
 			Level:     level,
-			Formatter: &logrus.TextFormatter{},
+			Formatter: &logrus.JSONFormatter{},
 		},
 	}
 }

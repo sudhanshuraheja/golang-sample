@@ -11,7 +11,7 @@ import (
 	"github.com/sudhanshuraheja/golang-sample/pkg/appcontext"
 )
 
-const migrationsPath = "file://./db/migrations"
+const migrationsPath = "file://./pkg/postgres/migrations"
 
 func RunDatabaseMigrations(ctx *appcontext.AppContext) error {
 	db, err := sql.Open("postgres", ctx.GetConfig().Database().ConnectionURL())

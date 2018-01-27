@@ -64,7 +64,7 @@ func Recover() negroni.HandlerFunc {
 	return negroni.HandlerFunc(func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 		defer func() {
 			if err := recover(); err != nil {
-				fmt.Println("Recovered from panic: %+v", err)
+				fmt.Printf("Recovered from panic: %+v", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}

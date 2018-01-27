@@ -16,7 +16,7 @@ func main() {
 	config := config.NewConfig()
 	logger := logger.NewLogger(config)
 	ctx := appcontext.NewAppContext(config, logger)
-	db := postgres.NewPostgres(logger, config.Database().ConnectionURL(), config.Database().MaxPoolSize())
+	db := postgres.NewPostgres(*logger, config.Database().ConnectionURL(), config.Database().MaxPoolSize())
 	server := server.NewServer(ctx, db)
 
 	logger.Infoln("Starting sample-cli")
@@ -53,6 +53,4 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		panic(err)
 	}
-
-	return app
 }
