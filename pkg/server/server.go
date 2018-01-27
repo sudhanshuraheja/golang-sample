@@ -12,7 +12,7 @@ import (
 	"github.com/sudhanshuraheja/golang-sample/pkg/logger"
 )
 
-func StartAPIServer() {
+func StartAPIServer() error {
 	server := negroni.New()
 	router := Router()
 
@@ -36,7 +36,7 @@ func StartAPIServer() {
 
 	serverURL := fmt.Sprintf(":%s", config.Port())
 	logger.Infoln("The server is now running at", serverURL)
-	http.ListenAndServe(serverURL, server)
+	return http.ListenAndServe(serverURL, server)
 }
 
 func Recover() negroni.HandlerFunc {

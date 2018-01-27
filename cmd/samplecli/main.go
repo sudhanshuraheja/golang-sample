@@ -5,6 +5,7 @@ import (
 
 	"github.com/urfave/cli"
 
+	"github.com/sudhanshuraheja/golang-sample/pkg/appcontext"
 	"github.com/sudhanshuraheja/golang-sample/pkg/config"
 	"github.com/sudhanshuraheja/golang-sample/pkg/logger"
 	"github.com/sudhanshuraheja/golang-sample/pkg/postgres"
@@ -12,14 +13,12 @@ import (
 )
 
 func main() {
-	config.Init()
-	logger.Init()
+	config := config.NewConfig()
+	logger := logger.NewLogger(config)
+	ctx := appcontext.NewAppContext(config, logger)
 
-	logger.Infoln("Sample CLI")
-	Init()
-}
+	logger.Infoln("Starting sample-cli")
 
-func Init() *cli.App {
 	app := cli.NewApp()
 	app.Name = config.Name()
 	app.Version = config.Version()
@@ -30,22 +29,21 @@ func Init() *cli.App {
 			Name:  "start",
 			Usage: "start the service",
 			Action: func(c *cli.Context) error {
-				server.StartAPIServer()
-				return nil
+				return server.StartAPIServer(ctx)
 			},
 		},
 		{
 			Name:  "migrate",
 			Usage: "run database migrations",
 			Action: func(c *cli.Context) error {
-				return postgres.RunDatabaseMigrations()
+				return postgres.RunDatabaseMigrations(ctx)
 			},
 		},
 		{
 			Name:  "rollback",
 			Usage: "rollback the latest database migration",
 			Action: func(c *cli.Context) error {
-				return postgres.RollbackDatabaseMigration()
+				return postgres.RollbackDatabaseMigration(ctx)
 			},
 		},
 	}
