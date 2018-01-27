@@ -17,7 +17,6 @@ const (
 
 var database *sqlx.DB
 
-// Init : Initialiase the database connection
 func Init() {
 	var err error
 
@@ -37,13 +36,11 @@ func Init() {
 	database.SetConnMaxLifetime(connMaxLifetime)
 }
 
-// Close : close the db connection
 func Close() error {
 	logger.Debug("Closing the DB connection")
 	return database.Close()
 }
 
-// Get : get a reference to the database connection
 func Get() *sqlx.DB {
 	return database
 }

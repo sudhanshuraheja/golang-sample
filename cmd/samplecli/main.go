@@ -19,7 +19,6 @@ func main() {
 	Init()
 }
 
-// Init : start the cli wrapper
 func Init() *cli.App {
 	app := cli.NewApp()
 	app.Name = config.Name()

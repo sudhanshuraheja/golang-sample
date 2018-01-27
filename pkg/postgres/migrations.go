@@ -14,7 +14,6 @@ import (
 
 const migrationsPath = "file://./db/migrations"
 
-// RunDatabaseMigrations : run each migration on the db
 func RunDatabaseMigrations() error {
 	db, err := sql.Open("postgres", config.Database().ConnectionURL())
 
@@ -38,7 +37,6 @@ func RunDatabaseMigrations() error {
 	return nil
 }
 
-// RollbackDatabaseMigration : rollback the latest migration
 func RollbackDatabaseMigration() error {
 	m, err := migrate.New(migrationsPath, config.Database().ConnectionURL())
 	if err != nil {

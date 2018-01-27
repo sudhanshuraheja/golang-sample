@@ -12,7 +12,6 @@ import (
 	"github.com/sudhanshuraheja/golang-sample/pkg/logger"
 )
 
-// StartAPIServer : setup routes and start the server
 func StartAPIServer() {
 	server := negroni.New()
 	router := Router()
@@ -40,7 +39,6 @@ func StartAPIServer() {
 	http.ListenAndServe(serverURL, server)
 }
 
-// Recover : middleware for recovering after panic
 func Recover() negroni.HandlerFunc {
 	return negroni.HandlerFunc(func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 		defer func() {

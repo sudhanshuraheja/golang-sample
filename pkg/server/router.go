@@ -6,7 +6,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Router : route requests to handlers
 func Router() http.Handler {
 	router := mux.NewRouter()
 	router.Handle("/ping", pingHandler())
