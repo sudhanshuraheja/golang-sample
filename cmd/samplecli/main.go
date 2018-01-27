@@ -8,6 +8,7 @@ import (
 	"github.com/sudhanshuraheja/golang-sample/pkg/config"
 	"github.com/sudhanshuraheja/golang-sample/pkg/logger"
 	"github.com/sudhanshuraheja/golang-sample/pkg/postgres"
+	"github.com/sudhanshuraheja/golang-sample/pkg/server"
 )
 
 func main() {
@@ -30,6 +31,7 @@ func Init() *cli.App {
 			Name:  "start",
 			Usage: "start the service",
 			Action: func(c *cli.Context) error {
+				server.StartAPIServer()
 				return nil
 			},
 		},
