@@ -18,7 +18,7 @@ type Config struct {
 	database               DatabaseConfig
 }
 
-func New() *Config {
+func NewConfig() *Config {
 	config := &Config{}
 
 	viper.AutomaticEnv()
@@ -89,5 +89,5 @@ func (c *Config) readLatestConfig() {
 	c.enableStaticFileServer = viper.GetBool("server.enableStaticFileServer")
 	c.enableGzipCompression = viper.GetBool("server.enableGzipCompression")
 	c.enableDelayMiddleware = viper.GetBool("server.enableDelayMiddleware")
-	c.database = newDatabaseConfig()
+	c.database = NewDatabaseConfig()
 }

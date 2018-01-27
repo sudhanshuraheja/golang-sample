@@ -15,7 +15,7 @@ type DatabaseConfig struct {
 	maxPoolSize int
 }
 
-func newDatabaseConfig() DatabaseConfig {
+func NewDatabaseConfig() DatabaseConfig {
 	return DatabaseConfig{
 		name:        viper.GetString("database.name"),
 		host:        viper.GetString("database.host"),

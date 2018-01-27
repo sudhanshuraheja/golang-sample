@@ -4,13 +4,13 @@ import (
 	"github.com/sudhanshuraheja/golang-sample/pkg/config"
 )
 
-type AppContext struct{
+type AppContext struct {
 	config *config.Config
 }
 
-func NewAppContext(config *config.Config) {
+func New(config *config.Config) *AppContext {
 	return &AppContext{
-		config: config
+		config: config,
 	}
 }
 
