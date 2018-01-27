@@ -16,6 +16,8 @@ func main() {
 	config := config.NewConfig()
 	logger := logger.NewLogger(config)
 	ctx := appcontext.NewAppContext(config, logger)
+	db := postgres.NewPostgres(logger, config.Database().ConnectionURL(), config.Database().MaxPoolSize())
+	server := server.NewServer(ctx, db)
 
 	logger.Infoln("Starting sample-cli")
 
@@ -29,7 +31,7 @@ func main() {
 			Name:  "start",
 			Usage: "start the service",
 			Action: func(c *cli.Context) error {
-				return server.StartAPIServer(ctx)
+				return server.Start()
 			},
 		},
 		{
