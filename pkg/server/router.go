@@ -4,18 +4,17 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/sudhanshuraheja/golang-sample/pkg/appcontext"
 )
 
-func Router() http.Handler {
+func Router(ctx *appcontext.AppContext) http.Handler {
 	router := mux.NewRouter()
-	router.Handle("/ping", pingHandler())
+	router.HandleFunc("/ping", pingHandler)
 	return router
 }
 
-func pingHandler() http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("{\"success\":\"pong\"}"))
-	})
+func pingHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("{\"success\":\"pong\"}"))
 }

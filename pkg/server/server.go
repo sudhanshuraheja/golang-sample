@@ -31,9 +31,8 @@ func (s *Server) Start() error {
 
 	server := negroni.New()
 	server.Use(negroni.NewRecovery())
-	server.Use(negroni.NewLogger())
 
-	router := Router()
+	router := Router(s.ctx)
 
 	if config.EnableDelayMiddleware() {
 		server.Use(delay.Middleware{})
@@ -47,12 +46,14 @@ func (s *Server) Start() error {
 		server.Use(negroni.NewStatic(http.Dir("data")))
 	}
 
+	serverURL := fmt.Sprintf(":%s", config.Port())
+
 	server.Use(Recover())
 	server.UseHandler(router)
+	logger.Infoln("Starting the server at", serverURL)
+	server.Run(serverURL)
 
-	serverURL := fmt.Sprintf(":%s", config.Port())
-	logger.Infoln("The server is now running at", serverURL)
-	return http.ListenAndServe(serverURL, server)
+	return nil
 }
 
 func (s *Server) Stop() error {
