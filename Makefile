@@ -20,7 +20,7 @@ end:
 #
 
 ### Name of the executable, it's possible to have multiple executables
-APP_EXECUTABLE="samplecli"
+APP_EXECUTABLE="sample"
 
 ### Get a list of all golang packages
 ALL_PACKAGES=$(go list ./... | grep -v "vendor")
@@ -32,7 +32,7 @@ ALL_PACKAGES=$(go list ./... | grep -v "vendor")
 ### Clean temporary files
 clean:
 	@echo "$(GREEN_COLOR)Cleaning unwanted files $(END_COLOR)"
-	rm -rf application.toml
+	rm -rf sample.toml
 	rm -rf coverage.txt
 	rm -rf coverage.html
 	rm -rf bin/
@@ -41,6 +41,7 @@ clean:
 init:
 	@echo "$(GREEN_COLOR)Initialising dep for the first time $(END_COLOR)"
 	go get -u github.com/golang/dep/cmd/dep
+	go get -u github.com/golang/lint/golint
 
 ### Update dependencies
 update:
@@ -60,13 +61,12 @@ vet:
 ### Check for linting issues
 lint:
 	@echo "$(GREEN_COLOR)Running lint $(END_COLOR)"
-	@echo "$(RED_COLOR)Linting is not running, fix in Makefile $(END_COLOR)"
-	#golint ./... | grep -v vendor
+	golint ./... | grep -v vendor
 
 ### Copy config from template
 copy-config:
 	@echo "$(GREEN_COLOR)Copying config from sample $(END_COLOR)"
-	cp application.toml.sample application.toml
+	cp sample.toml.sample sample.toml
 
 ### Manually test all packages
 test:

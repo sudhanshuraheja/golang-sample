@@ -13,6 +13,7 @@ import (
 
 const migrationsPath = "file://./pkg/postgres/migrations"
 
+// RunDatabaseMigrations - fire the next DB migration
 func RunDatabaseMigrations(ctx *appcontext.AppContext) error {
 	db, err := sql.Open("postgres", ctx.GetConfig().Database().ConnectionURL())
 
@@ -24,7 +25,7 @@ func RunDatabaseMigrations(ctx *appcontext.AppContext) error {
 
 	err = m.Up()
 	if err == migrate.ErrNoChange {
-		ctx.GetLogger().Info("Sadly, found no new migrations to run")
+		ctx.GetLogger().Infoln("Sadly, found no new migrations to run")
 		return nil
 	}
 
@@ -32,10 +33,11 @@ func RunDatabaseMigrations(ctx *appcontext.AppContext) error {
 		return err
 	}
 
-	ctx.GetLogger().Info("Migration has been successfully done")
+	ctx.GetLogger().Infoln("Migration has been successfully done")
 	return nil
 }
 
+// RollbackDatabaseMigration - rollback the latest DB migration
 func RollbackDatabaseMigration(ctx *appcontext.AppContext) error {
 	m, err := migrate.New(migrationsPath, ctx.GetConfig().Database().ConnectionURL())
 	if err != nil {
@@ -43,10 +45,10 @@ func RollbackDatabaseMigration(ctx *appcontext.AppContext) error {
 	}
 
 	if err := m.Steps(-1); err != nil {
-		ctx.GetLogger().Info("We have already removed all migrations")
+		ctx.GetLogger().Infoln("We have already removed all migrations")
 		return nil
 	}
 
-	ctx.GetLogger().Info("Rollback Successful")
+	ctx.GetLogger().Infoln("Rollback Successful")
 	return nil
 }

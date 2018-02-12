@@ -13,17 +13,17 @@ import (
 )
 
 func main() {
-	config := config.NewConfig()
-	logger := logger.NewLogger(config)
+	config := config.NewConfig([]string{".", "../.."})
+	logger := logger.NewLogger(config, os.Stdout)
 	ctx := appcontext.NewAppContext(config, logger)
-	db := postgres.NewPostgres(*logger, config.Database().ConnectionURL(), config.Database().MaxPoolSize())
+	db := postgres.NewPostgres(logger, config.Database().ConnectionURL(), config.Database().MaxPoolSize())
 	server := server.NewServer(ctx, db)
 
 	logger.Infoln("Starting sample-cli")
 
 	app := cli.NewApp()
-	app.Name = config.Name()
-	app.Version = config.Version()
+	app.Name = "sample"
+	app.Version = "0.0.1"
 	app.Usage = "this service is a sample golang service"
 
 	app.Commands = []cli.Command{
